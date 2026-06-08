@@ -3,3 +3,13 @@ sum by (container_name) (rate(kubernetes_io:anthos_container_cpu_core_usage_time
 
 gke metrics memory
 sum by (container_name) (kubernetes_io:anthos_container_memory_used_bytes{cluster_name=~"${cluster.value}",namespace_name=~"${namespace.value}",pod=~"${pod.value}"})
+
+api server up
+(sum(up{cluster=~"${cluster.value}",job="apiserver",namespace=~"${namespace.value}"} == 1) / sum(up{cluster=~"${cluster.value}",job="apiserver",namespace=~"${namespace.value}"})) * 100
+
+schedule up
+(sum(up{cluster=~"${cluster.value}",job="scheduler",namespace=~"${namespace.value}"} == 1) / sum(up{cluster=~"${cluster.value}",job="scheduler",namespace=~"${namespace.value}"})) * 100
+
+Controller Mangers UP
+(sum(up{cluster=~"${cluster.value}",job="controller-manager",namespace=~"${namespace.value}"} == 1) / sum(up{cluster=~"${cluster.value}",job="controller-manager",namespace=~"${namespace.value}"})) * 100
+
